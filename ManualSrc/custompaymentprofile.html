@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <title>Dashboard</title>
+    <meta name="description" content=""/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            background: #80b0fc;
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div>
+        <div class="card text-center" style="width: 21.5em;margin:0 auto;">
+            <div class="card-body">
+                <h5 class="card-title">Send Payment</h5>
+                <h3 style="color: dodgerblue" th:inline="text" id="nameh3">[[${name}]]</h3><br>
+                <h6 th:inline="text" id="accounth6">[[${account}]]</h6>
+                <form id="form_makepaymentprofile">
+                    <div class="form-group">
+                        <label for="senderNameInput">Enter Your Name</label>
+                        <input type="text" class="form-control" id="senderNameInput" placeholder="Your Name" name="sender_name" required><br>
+                        <label for="senderEmailInput">Enter Your Email ID</label>
+                        <input type="text" class="form-control" id="senderEmailInput" placeholder="Your Email ID" name="sender_email" required><br>
+                        <label for="amountInput">Enter Amount</label>
+                        <input type="text" class="form-control" id="amountInput" placeholder="Amount to be sent" name="amount" required><br>
+                        <input type="text" name="username" id="usernameInput" hidden>
+                        <input type="text" name="accountnumber" id="accountnumberInput" hidden>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">Send Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to continue with the payment?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="sendPaymentForm()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    var paymentForm = document.getElementById("form_makepaymentprofile");
+    var userName = document.getElementById("usernameInput");
+    var accountNumber = document.getElementById("accountnumberInput");
+    var nameH3 = document.getElementById("nameh3");
+    var accountH6 = document.getElementById("accounth6");
+
+    function sendPaymentForm(){
+        userName.value = nameH3.innerText;
+        console.log(userName.value);
+        accountNumber.value = accountH6.innerText;
+        console.log(accountNumber.value);
+        paymentForm.submit();
+    }
+
+</script>
+
+</body>
+</html>

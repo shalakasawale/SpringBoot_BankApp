@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <title>Payment Page</title>
+    <meta name="description" content=""/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    <h2>Make Payment</h2>
+    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#payusingaccountno" role="tab" aria-controls="home" aria-selected="true">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#payusinguniqueid" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="payusingaccountno" role="tabpanel">
+            <div id="form_payusingaccountno">
+                <form id="form_makepaymentusingaccountno" class="form_makepaymentusingaccountno" th:action="@{/makepaymentaccountno}" method="post">
+
+                    <label for="inputRecipientAccountNumber" class="sr-only">Enter Account Number</label>
+                    <input type="text" name="accountnumber" id="inputRecipientAccountNumber" class="form-control" placeholder="Account Number" required="" />
+                    <label for="inputRecipientIFSC" class="sr-only">Enter IFSC Code</label>
+                    <input type="text" name="ifsc" id="inputRecipientIFSC" class="form-control" placeholder="IFSC" required="" />
+                    <label for="inputAmount" class="sr-only">Enter Amount</label>
+                    <input type="text" name="transactionamount" id="inputAmount" class="form-control" placeholder="Amount to be Sent" required=""/>
+                    <label for="inputTransactionDesc" class="sr-only">Enter Transaction Description</label>
+                    <input type="text" name="transactiondesc" id="inputTransactionDesc" class="form-control" placeholder="Transaction Remarks"/>
+                    <label>
+                        <select class="form-control">
+                            <option selected="selected">Normal</option>
+                            <option>Shopping</option>
+                            <option>Travel</option>
+                            <option>Returns</option>
+                        </select>
+                    </label>
+                    <br><br>
+                    <!--<button type="submit" class="btn btn-primary">Make Payment</button>-->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#accountnomodal">
+                        Make Payment
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="payusinguniqueid" role="tabpanel">
+            <div id="form_payusinguniqueid">
+                <form id="form_makepaymentusinguniqueid" class="form_makepaymentusinguniqueid" th:action="@{/makepaymentuniqueid}" method="post">
+
+                    <label for="inputUniqueID" class="sr-only">Enter Unique Payment ID</label>
+                    <input type="text" name="uniquepaymentid" id="inputUniqueID" class="form-control" placeholder="Unique Payment ID" required="" />
+                    <label for="inputAmountUID" class="sr-only">Enter IFSC Codeasdasd</label>
+                    <input type="text" name="amount" id="inputAmountUID" class="form-control" placeholder="Amount to be sent" required="" />
+                    <label for="inputTransactionDescUID" class="sr-only">Enter Transaction Description</label>
+                    <input type="text" name="transactiondesc" id="inputTransactionDescUID" class="form-control" placeholder="Transaction Remarks"/>
+
+                    <br><br>
+                    <!--<button type="submit" class="btn btn-primary">Make Payment</button>-->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uniquepaymentmodel">
+                        Make Payment
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="accountnomodal" tabindex="-2" role="dialog" aria-labelledby="accountnomodal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accountnoTitle">Confirm Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to continue with the payment?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#transactionpinmodalaccountno" data-dismiss="modal">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="uniquepaymentmodal" tabindex="-1" role="dialog" aria-labelledby="uniquepaymentmodel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uniquepaymentTitle">Confirm Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to continue with the payment?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#transactionpinmodaluniquepaymentid" data-dismiss="modal">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="transactionpinmodalaccountno" tabindex="-1" role="dialog" aria-labelledby="transactionpinmodalaccountno" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionpinTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form_transactionpinaccountno" class="form_transactionpinaccountno" th:action="@{/makepaymentaccountno}" method="post">
+                        <label for="inputTransactionPIN" class="sr-only">Enter Unique Payment ID</label>
+                        <input type="password" name="transactionPIN" id="inputTransactionPIN" class="form-control" placeholder="Transaction PIN" required="" />
+                        <input type="text" name="accountnumber" id="recipientAccountNumberModal" hidden/>
+                        <input type="text" name="ifsc" id="recipientIFSCModal" hidden/>
+                        <input type="text" name="transactionamount" id="transactionAmountModal" hidden/>
+                        <input type="text" name="transactiondesc" id="transactionDescModal" hidden/>
+                        <br><br>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="sendAccountForm()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="transactionpinmodaluniquepaymentid" tabindex="-1" role="dialog" aria-labelledby="transactionpinmodaluniquepaymentid" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionpinuniquepaymentidTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form_transactionpinuid" class="form_transactionpinuid" th:action="@{/makepaymentuniqueid}" method="post">
+                        <label for="inputTransactionPINUID" class="sr-only">Enter Unique Payment ID</label>
+                        <input type="password" name="transactionPIN" id="inputTransactionPINUID" class="form-control" placeholder="Transaction PIN" required="" />
+                        <input type="text" name="uniquepaymentid" id="recipientUniqueIDModal" hidden/>
+                        <input type="text" name="amount" id="transactionAmountUIDModal" hidden/>
+                        <input type="text" name="transactiondesc" id="transactionDescUIDModal" hidden/>
+                        <br><br>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="sendUIDForm()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var form_transactionpin_account = document.getElementById("form_transactionpinaccountno");
+        var form_transactionpin_uid = document.getElementById("form_transactionpinuid");
+
+        var accountnumber = document.getElementById("inputRecipientAccountNumber");
+        var ifsc = document.getElementById("inputRecipientIFSC");
+        var amount = document.getElementById("inputAmount");
+        var desc = document.getElementById("inputTransactionDesc");
+
+        var unique_paymentid = document.getElementById("inputUniqueID");
+        var amount_uid = document.getElementById("inputAmountUID");
+        var desc_uid = document.getElementById("inputTransactionDescUID");
+
+        var modal_accountnumber = document.getElementById("recipientAccountNumberModal");
+        var modal_ifsc = document.getElementById("recipientIFSCModal");
+        var modal_amount = document.getElementById("transactionAmountModal");
+        var modal_desc = document.getElementById("transactionDescModal");
+
+        var modal_uniqueid = document.getElementById("recipientUniqueIDModal");
+        var modal_amount_uid = document.getElementById("transactionAmountUIDModal");
+        var modal_desc_uid = document.getElementById("transactionDescUIDModal");
+
+        function sendAccountForm(){
+            modal_accountnumber.value = accountnumber.value;
+            modal_ifsc.value = ifsc.value;
+            modal_amount.value = amount.value;
+            modal_desc.value = desc.value;
+
+            form_transactionpin_account.submit();
+        }
+
+        function sendUIDForm(){
+            modal_uniqueid.value = unique_paymentid.value;
+            modal_amount_uid.value = amount_uid.value;
+            modal_desc_uid.value = desc_uid;
+            form_transactionpin_uid.submit();
+        }
+    </script>
+
+</div>
+
+</body>
+</html>

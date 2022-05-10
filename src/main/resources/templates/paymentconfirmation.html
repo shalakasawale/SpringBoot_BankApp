@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <title>Nohara Corp</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Confirm Payment</h1>
+    <div class="card">
+        <div class="card-body">
+            <h4>Send Payment To: [[$recipientname]]</h4><br>
+            <h4>Account No: [[accountnumber]]</h4><br>
+            <h4>Amount: [[$amount]]</h4><br>
+            <h5>Transaction Number: [[$transaction_number]]</h5><br><br>
+            <h2>Payment Confirmed</h2>
+        </div>
+    </div>
+</div>
+</body>
+</html>

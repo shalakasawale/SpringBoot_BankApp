@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <title>Dashboard</title>
+    <meta name="description" content=""/>
+    <base href="/"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />'
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="circlestyle.css"/>
+    <!-- Compiled and minified JavaScript -->
+    <style>
+        body{
+            padding-top:60px;
+        }
+        /* fix padding under menu after resize */
+        @media screen and (max-width: 767px) {
+            body { padding-top: 60px; }
+        }
+        @media screen and (min-width:768px) and (max-width: 991px) {
+            body { padding-top: 110px; }
+        }
+        @media screen and (min-width: 992px) {
+            body { padding-top: 60px; }
+        }
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <a class="navbar-brand" href="/">Nohara Corp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <form th:action="@{/dashboardnav}" method="get">
+                    <a class="nav-link" href="/dashboardnav">Home <span class="sr-only">(current)</span></a>
+                </form>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <form th:action="@{/myprofile}" method="post">
+                    <a class="nav-link" href="/myprofile">My Profile</a>
+                </form>
+            </li>
+            <li class="nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <center><h3 th:inline="text">[[${username_dashboard}]]</h3></center>
+
+    <div class="row" id="mydetails">
+        <div class="card" style="width: 100%;">
+            <div class="card-header">
+                <div class="row center">
+                    <div class="col-sm-10">
+                        My Details
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="float-right"><button class="btn btn-secondary">Edit</button></span>
+                    </div>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h6 th:inline="text">Name: [[${user_details.getName()}]]</h6></li>
+                <li class="list-group-item"><h6 th:inline="text">Email ID: [[${user_details.getEmail()}]]</h6></li>
+                <li class="list-group-item"><h6 th:inline="text">Username: [[${user_details.getUsername()}]]</h6></li>
+                <li class="list-group-item"><h6 th:inline="text">Mobile No: [[${user_details.getMobileno()}]]</h6></li>
+                <li class="list-group-item">
+                    <div class="row center">
+                        <div class="col-sm-4">
+                            <span style="text-align: center;"><button class="btn btn-primary">Change Profile PIN</button></span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span><button class="btn btn-primary">Change Transaction PIN</button></span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span><button class="btn btn-primary">Change Password</button></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <div class="row" id="accountdetails">
+        <div class="card" style="width: 100%;">
+            <div class="card-header">
+                <div class="row center">
+                    <div class="col-sm-10">
+                        Account Details
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="float-right"><button class="btn btn-secondary">Edit</button></span>
+                    </div>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h6 th:inline="text">Account Name: [[${account_details.getAccount_name()}]]</h6></li>
+                <li class="list-group-item"><h6 th:inline="text">Account Number: [[${account_details.getAccountnumber()}]]</h6></li>
+                <li class="list-group-item"><h6 th:inline="text">IFSC: [[${account_details.getIfsc()}]]</h6></li>
+                <li class="list-group-item"><h6 th:inline="text">Account Type: [[${account_details.getAccount_type()}]]</h6></li>
+                <li class="list-group-item"><h6 th:inline="text">Unique Payment ID: [[${account_details.getUnique_paymentid()}]]</h6></li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#paymentprofilemodal">Create Your Payment Profile</button>
+    </div>
+
+    <div class="modal fade" id="paymentprofilemodal" tabindex="-2" role="dialog" aria-labelledby="paymentprofileLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentprofileTitleModal">Create Payment Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal_body_text1">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form id="formPaymentProfile">
+                                <input type="text" name="paymentprofileurl" id="paymentprofileurl" class="form-control" placeholder="URL Name"/><br>
+                                <h6 style="padding-top: 10px; margin: auto;" id="errorname"></h6><br>
+                                <input type="text" name="paymentprofilename" id="paymentprofilename" class="form-control" placeholder="Profile Name"/>
+                                <input type="checkbox" name="chkBox1" id="chkBox1" class="showHideCheck" />Click me to show the text box
+                                <br/><div class="hiddenInput"> Enter
+                                <input type="text" name="txtBox1"/></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Create Page</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    $(".hiddenInput").hide();
+    $(".showHideCheck").on("change", function() {
+        $this = $(this);
+        $input = $this.parent().find(".hiddenInput");
+        if($this.is(":checked")) {
+            $input.slideDown();
+        } else {
+            $input.slideUp();
+        }
+    });
+
+    $(document).ready(function () {
+        $('#paymentprofileurl').keyup(function () {
+            var errorname = document.getElementById("errorname");
+            var paymentProfileUrl = document.getElementById("paymentprofileurl").value;
+            event.preventDefault();
+            if(paymentProfileUrl.length <= 0){
+                errorname.style.display = "none";
+            }else {
+                $.ajax({
+                    method: 'POST',
+                    data: {
+                        ppurl: paymentProfileUrl
+                    },
+                    dataType: 'html',
+                    url: "/cav",
+                    success: function (data) {
+                        console.log("Executed:" + data);
+                        errorname.style.display = "block";
+                        errorname.innerText = data;
+                        if (data === "Not Available") {
+                            errorname.style.color = "#f45642";
+                        } else {
+                            errorname.style.color = "#16c40d";
+                        }
+                    },
+                    error: function (e) {
+
+                    }
+                })
+            }
+        });
+    });
+
+    $("#formPaymentProfile").submit(function(event){
+
+    })
+</script>
+
+</body>
+</html>
